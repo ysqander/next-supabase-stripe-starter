@@ -202,3 +202,9 @@ PRs are always welcome.
 ---
 
 This project was inspired by Vercel's [nextjs-subscription-payments](https://github.com/vercel/nextjs-subscription-payments).
+## Credits
+
+This template is forked from [next-supabase-stripe-starter](https://github.com/KolbySisk/next-supabase-stripe-starter) by [@kolbysisk](https://twitter.com/KolbySisk) with additional modifications:
+
+- Added email configuration section to ReadMe
+- modified signup to account for code verification sent by supabase
