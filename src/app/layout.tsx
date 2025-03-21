@@ -2,9 +2,11 @@ import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { Montserrat, Montserrat_Alternates } from 'next/font/google';
 import Link from 'next/link';
+import { ThemeProvider } from 'next-themes';
 import { IoLogoFacebook, IoLogoInstagram, IoLogoTwitter } from 'react-icons/io5';
 
 import { Logo } from '@/components/logo';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/utils/cn';
 import { Analytics } from '@vercel/analytics/react';
@@ -33,17 +35,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className={cn('font-sans antialiased', montserrat.variable, montserratAlternates.variable)}>
-        <div className='m-auto flex h-full max-w-[1440px] flex-col px-4'>
-          <AppBar />
-          <main className='relative flex-1'>
-            <div className='relative h-full'>{children}</div>
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-        <Analytics />
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          <div className='m-auto flex h-full max-w-[1440px] flex-col px-4'>
+            <AppBar />
+            <main className='relative flex-1'>
+              <div className='relative h-full'>{children}</div>
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
@@ -53,7 +57,10 @@ async function AppBar() {
   return (
     <header className='flex items-center justify-between py-8'>
       <Logo />
-      <Navigation />
+      <div className='flex items-center gap-4'>
+        <ThemeToggle />
+        <Navigation />
+      </div>
     </header>
   );
 }
@@ -108,7 +115,7 @@ function Footer() {
         </div>
       </div>
       <div className='border-t border-zinc-800 py-6 text-center'>
-        <span className='text-neutral4 text-xs'>Copyright {new Date().getFullYear()} ©  YOUR_APP_NAME_HERE</span>
+        <span className='text-neutral4 text-xs'>Copyright {new Date().getFullYear()} © YOUR_APP_NAME_HERE</span>
       </div>
     </footer>
   );
